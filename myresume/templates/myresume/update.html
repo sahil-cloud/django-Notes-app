@@ -1,0 +1,38 @@
+{% extends './base.html' %}
+{% load my_tag %}
+{% block title %}
+Home
+{% endblock title %}
+
+{% block heading %}
+<div class="alert alert-warning text-center m-4" role="alert">
+    <h4 class="text-black">Notes App with Django</h4>
+</div>
+{% endblock heading %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <div class="alert alert-info text-center m-4 p-5" role="alert">
+                Update Note..
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <form action='' method='POST'>
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{form.title}}
+                </div>
+                <div class="mb-3">
+                    {{form.desc}}
+                </div>
+            
+                <button type="submit" class="btn btn-info">Save</button>
+            </form>
+            <a href="{% url 'homepage' %}" class="btn btn-danger mt-2">Back To Home</a>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+

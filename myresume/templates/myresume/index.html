@@ -1,0 +1,82 @@
+{% extends './base.html' %}
+{% load my_tag %}
+{% block title %}
+Home
+{% endblock title %}
+
+{% block heading %}
+<div class="alert alert-warning text-center m-4" role="alert">
+    <h4 class="text-black">Notes App with Django</h4>
+</div>
+{% endblock heading %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <div class="alert alert-info text-center m-4 p-5" role="alert">
+                Add a Note..
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <form action='' method='POST'>
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{form.title}}
+                </div>
+                <div class="mb-3">
+                    {{form.desc}}
+                </div>
+            
+                <button type="submit" class="btn btn-info">Add</button>
+            </form>
+        </div>
+        <div class="container">
+            <div class="alert alert-danger text-center m-4" role="alert">
+                My Notes.. 
+            </div>
+            {% if notes %}
+            <div class="container">
+                <div class="row m-2">
+                {% for note in notes %}
+                {% comment %} {% if forloop.counter0|modulo:2 == 0 %} {% endcomment %}
+                    {% comment %} {% endif %} {% endcomment %}
+                <div class="col-sm-4 col-md-4 mt-2">
+                <div class="card" style="width: 18rem; background-color: darkgray;">
+                    <div class="card-body">
+                        <h5 class="card-title text-white"> {{note.title}} </h5>
+                        <p class="card-text text-white"> {{note.desc}} </p>
+                        <!-- <div class="row"> -->
+
+                          
+                            <a href="{% url 'updateData' note.id %}" class="btn btn-info">Edit</a>
+                            
+                            <form action=" {% url 'delData' note.id %} " method="POST" class="d-inline">
+                            {% csrf_token %}
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </form>
+               
+                        <!-- </div> -->
+                        
+                    </div>
+                </div>
+                
+                </div>
+                
+              {% comment %} {% if forloop.counter0|modulo:2 == 0 %} {% endcomment %}
+                    {% comment %} {% endif %} {% endcomment %}
+                {% endfor %}
+                    </div>
+            </div>
+            {% else %}
+                <div class="container">
+            <div class="alert alert-info text-center m-4" role="alert">
+                No Data to show...
+            </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock body %}
